@@ -15,6 +15,8 @@ import java.io.IOException;
 import org.apache.hadoop.fs.Path;
 
 public class HighestRatedMovieCount {
+    private final static IntWritable one = new IntWritable(1);
+
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
         Configuration c= new Configuration();
         String[] files = new GenericOptionsParser(c, args).getRemainingArgs();
@@ -23,7 +25,7 @@ public class HighestRatedMovieCount {
             System.exit(-1);
         }
         Path input = new Path(files[0]);
-        Path outputJob1 = new Path(files[0]+"-tmp");
+        Path outputJob1 = new Path(files[1]+"-tmp");
         Path output = new Path(files[1]);
         Configuration configuration=new Configuration();
         Job job1= Job.getInstance(configuration, "MovieCountbyName");
@@ -56,7 +58,7 @@ public class HighestRatedMovieCount {
             String line = value.toString();
             String[] columnsForLine = line.split("\t");
             String movieName= columnsForLine[1];
-            con.write(new Text(movieName), new IntWritable(1));
+            con.write(new Text(movieName), one);
 
         }
     }
